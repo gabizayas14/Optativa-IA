@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#172554">
+    <title>VisionAI | Reconocimiento inteligente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="barra-superior">
+    <a class="marca" href="#">
+        <span class="marca-icono">V</span>
+        VisionAI
+    </a>
+    <span class="estado-global">
+      <span class="punto"></span>
+      Clasificación inteligente
+    </span>
+</header>
+
+<main class="contenedor">
+    <section class="presentacion">
+        <span class="etiqueta">TEACHABLE MACHINE</span>
+        <h1>Reconoce. Analiza. <span>Descubre.</span></h1>
+        <p>Utiliza inteligencia artificial para identificar imágenes
+            y consultar tus resultados en tiempo real.</p>
+    </section>
+
+    <section class="panel-principal">
+        <div class="panel">
+            <div class="titulo-panel">
+                <div>
+                    <h2>Área de reconocimiento</h2>
+                    <p>Activa la cámara o selecciona una imagen.</p>
+                </div>
+                <span id="estado" class="insignia">Inactivo</span>
+            </div>
+
+            <div id="zona-camara" class="zona-visual">
+                <div id="placeholder" class="placeholder">
+                    <div class="icono-imagen">◎</div>
+                    <h3>Tu espacio de análisis</h3>
+                    <p>Inicia la cámara o sube una imagen para comenzar.</p>
+                </div>
+                <div id="webcam-container" class="medio-visual"></div>
+                <img id="imagen-subida" class="medio-visual imagen-resultado"
+                     alt="Imagen seleccionada para analizar" hidden>
+            </div>
+
+            <div class="acciones">
+                <button id="iniciar" class="boton boton-principal">
+                    ▶ Iniciar cámara
+                </button>
+                <button id="parar" class="boton boton-secundario" disabled>
+                    ■ Detener
+                </button>
+            </div>
+
+            <div class="separador"><span>O analiza un archivo</span></div>
+
+            <label for="archivo" class="zona-subida">
+                <span class="subida-icono">↑</span>
+                <span><strong>Seleccionar imagen</strong>
+            <small>JPG, PNG, WEBP · desde tu dispositivo</small></span>
+            </label>
+            <input id="archivo" type="file" accept="image/*" hidden>
+        </div>
+
+        <div class="panel panel-resultados">
+            <div class="titulo-panel">
+                <div>
+                    <h2>Resultado del análisis</h2>
+                    <p>Predicciones del modelo de IA.</p>
+                </div>
+                <span class="icono-resultado">✳</span>
+            </div>
+
+            <div id="mensaje" class="mensaje" role="status" aria-live="polite">
+                Aquí aparecerá el resultado cuando analices una imagen.
+            </div>
+
+            <div class="umbral-cabecera">
+                <label for="umbral">Coincidencia mínima</label>
+                <strong id="valor-umbral">80%</strong>
+            </div>
+            <input id="umbral" type="range" min="1" max="100" value="80">
+            <div class="extremos"><span>1%</span><span>100%</span></div>
+
+            <div class="campo-mensaje">
+                <label for="mensaje-ok">Mensaje si hay coincidencia</label>
+                <input id="mensaje-ok" type="text"
+                       value="¡Objeto reconocido correctamente!">
+            </div>
+            <div class="campo-mensaje">
+                <label for="mensaje-no">Mensaje si no hay coincidencia</label>
+                <input id="mensaje-no" type="text"
+                       value="No se ha encontrado una coincidencia suficiente.">
+            </div>
+
+            <h3 class="subtitulo">Probabilidades por clase</h3>
+            <div id="predicciones" class="predicciones">
+                <p class="texto-vacio">Todavía no hay predicciones.</p>
+            </div>
+
+            <button id="guardar" class="boton boton-principal boton-ancho" disabled>
+                + Guardar resultado en el histórico
+            </button>
+        </div>
+    </section>
+
+    <section class="panel panel-historico">
+        <div class="titulo-panel">
+            <div>
+                <h2>Histórico de resultados</h2>
+                <p>Consulta los análisis guardados en este navegador.</p>
+            </div>
+            <button id="borrar-historial" class="boton boton-secundario">
+                Borrar histórico
+            </button>
+        </div>
+
+        <div class="resumen">
+            <div class="tarjeta-resumen">
+                <span>Análisis guardados</span>
+                <strong id="total">0</strong>
+            </div>
+            <div class="tarjeta-resumen">
+                <span>Coincidencias</span>
+                <strong id="aciertos">0</strong>
+            </div>
+            <div class="tarjeta-resumen">
+                <span>Última confianza</span>
+                <strong id="confianza-media">—</strong>
+            </div>
+        </div>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Origen</th>
+                    <th>Clase detectada</th>
+                    <th>Confianza</th>
+                    <th>Resultado</th>
+                </tr>
+                </thead>
+                <tbody id="filas-historico">
+                <tr><td colspan="5" class="texto-vacio">
+                    Aún no hay resultados guardados.
+                </td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="nota-historico">
+            El histórico se guarda localmente en este navegador.
+        </p>
+    </section>
+
+    <footer>
+        Proyecto educativo · Clasificación de imágenes con inteligencia artificial
+    </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
